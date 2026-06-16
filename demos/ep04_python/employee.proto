@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package company;
+
+option java_package = "com.example.company";
+option java_outer_classname = "EmployeeProto";
+
+// Departments in the organization
+enum Department {
+  DEPARTMENT_UNKNOWN = 0;  // proto3: first value must be 0
+  ENGINEERING = 1;
+  MARKETING   = 2;
+  SALES       = 3;
+  HR          = 4;
+  FINANCE     = 5;
+}
+
+// A single employee record
+message Employee {
+  string     employee_id = 1;  // unique ID e.g. "EMP001"
+  string     name        = 2;
+  int32      age         = 3;
+  Department department  = 4;
+  double     salary      = 5;
+  bool       is_active   = 6;
+  string     email       = 7;
+  repeated string skills = 8;  // list of skill tags
+}
+
+// Wrapper to store multiple employees in one serialized blob
+message EmployeeList {
+  repeated Employee employees  = 1;
+  int32             total_count = 2;
+}

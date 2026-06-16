@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package school;
+
+// Simplified proto for nanopb / MCU use.
+// No Timestamp, no map<> — keeps it heap-free with a .options file.
+
+enum Department {
+  DEPARTMENT_UNKNOWN = 0;
+  COMPUTER_SCIENCE = 1;
+  ELECTRICAL_ENGINEERING = 2;
+  MECHANICAL_ENGINEERING = 3;
+  MATHEMATICS = 4;
+}
+
+message Student {
+  string student_id = 1;          // max 16 chars — see student.options
+  string name = 2;                // max 64 chars — see student.options
+  int32 age = 3;
+  Department department = 4;
+  repeated string courses = 5;   // max 10 entries, max 32 chars each
+  float gpa = 6;
+  bool is_enrolled = 7;
+}

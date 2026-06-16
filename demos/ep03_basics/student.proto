@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package school;
+
+import "google/protobuf/timestamp.proto";
+
+option java_package = "com.example.school";
+option java_outer_classname = "StudentProto";
+
+// Academic department enumeration.
+// First value is always 0 (proto3 requirement) and represents unknown/unset.
+enum Department {
+  DEPARTMENT_UNKNOWN     = 0;
+  COMPUTER_SCIENCE       = 1;
+  ELECTRICAL_ENGINEERING = 2;
+  MECHANICAL_ENGINEERING = 3;
+  MATHEMATICS            = 4;
+}
+
+// Physical address — demonstrates nested message usage.
+message Address {
+  string street   = 1;
+  string city     = 2;
+  string state    = 3;
+  string zip_code = 4;
+}
+
+// Student record — demonstrates all proto3 message type features:
+//   scalar types, nested message, enum, repeated, map, oneof, well-known types
+message Student {
+  string     student_id  = 1;   // scalar string
+  string     name        = 2;   // scalar string
+  int32      age         = 3;   // scalar int32 (always positive — int32 is fine)
+  Department department  = 4;   // enum field
+
+  repeated string courses = 5;  // list of enrolled course names
+
+  double  gpa     = 6;          // grade point average (0.0–4.0)
+  Address address = 7;          // nested message
+
+  map<string, int32> grades = 8;  // course name → grade (0–100)
+
+  google.protobuf.Timestamp enrollment_date = 9;  // well-known Timestamp type
+
+  // oneof: a student can receive either a scholarship OR a monthly stipend, not both
+  oneof financial_aid {
+    float scholarship_amount = 10;  // one-time scholarship in USD
+    float stipend_amount     = 11;  // monthly stipend in USD
+  }
+}
+
+// A batch of students — useful for serializing multiple records to one file.
+message StudentList {
+  repeated Student students   = 1;
+  int32           total_count = 2;
+}

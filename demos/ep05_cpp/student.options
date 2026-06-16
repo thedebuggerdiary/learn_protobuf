@@ -1,0 +1,8 @@
+# nanopb static-allocation options for student.proto
+# These tell nanopb the maximum sizes for strings and repeated fields,
+# so it generates fixed-size C arrays instead of heap-based callbacks.
+
+Student.student_id   max_size:16
+Student.name         max_size:64
+Student.courses      max_count:10
+Student.courses      max_size:32
